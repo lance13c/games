@@ -1,0 +1,56 @@
+---
+import Card from "@components/Card";
+import Footer from "@components/Footer.astro";
+import Header from "@components/Header.astro";
+import Hr from "@components/Hr.astro";
+import Layout from "@layouts/Layout.astro";
+import { getCollection } from "astro:content";
+// import getSortedGames from "@utils/getSortedGames";
+import { SOCIALS } from "@config";
+import getSortedGames from "@utils/getSortedGames";
+
+const games = await getCollection("games");
+
+const sortedGames = getSortedGames(games);
+const featuredGames = sortedGames.filter(({ data }) => data.featured);
+
+const socialCount = SOCIALS.filter(social => social.active).length;
+---
+
+<Layout>
+  <Header />
+  <main id="main-content">
+    <section id="hero">
+      <h1>Game Showcase</h1>
+    </section>
+
+    <Hr />
+
+    <section id="all-games">
+      <h2>All Games</h2>
+      <ul>
+        {
+          sortedGames.map(({ data, slug }) => (
+            <Card
+              href={`/games/${slug}`}
+              frontmatter={data}
+              secHeading={false}
+            />
+          ))
+        }
+      </ul>
+      <!-- <div class="all-games-btn-wrapper">
+        <LinkButton href="/games">
+          All Games
+          <svg xmlns="http://www.w3.org/2000/svg"
+            ><path
+              d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z"
+            ></path>
+          </svg>
+        </LinkButton>
+      </div> -->
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

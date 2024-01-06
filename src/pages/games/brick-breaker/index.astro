@@ -1,0 +1,43 @@
+---
+import Card from "@components/Card";
+import Footer from "@components/Footer.astro";
+import Header from "@components/Header.astro";
+import Hr from "@components/Hr.astro";
+import LinkButton from "@components/LinkButton.astro";
+import Layout from "@layouts/Layout.astro";
+import { getCollection } from "astro:content";
+// import getSortedGames from "@utils/getSortedGames";
+const games = await getCollection("games");
+
+// Get this game info
+const game = games.find(game => game.slug === "brick-breaker");
+---
+
+<Layout>
+  <Header />
+  <main id="main-content">
+    <section class="py-2" id="hero">
+      <h1 class="pb-2">{game?.data.title}</h1>
+      <p class="text-xs">
+        {game?.data.description}
+      </p>
+    </section>
+
+    <Hr />
+    <section
+      class="flex w-full max-w-full items-center justify-center py-4"
+      id="game"
+    >
+    </section>
+
+    <script>
+      import { startGame } from "@pages/games/brick-breaker/main";
+
+      {
+        startGame();
+      }
+    </script>
+  </main>
+
+  <Footer />
+</Layout>
