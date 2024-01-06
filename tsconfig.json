@@ -3,6 +3,11 @@
   "compilerOptions": {
     "baseUrl": "src",
     "jsx": "react-jsx",
+    "plugins": [
+      {
+        "name": "@astrojs/ts-plugin"
+      }
+    ],
     "paths": {
       "@assets/*": ["assets/*"],
       "@config": ["config.ts"],

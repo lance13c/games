@@ -1,8 +1,7 @@
 ---
-import TagPosts from "@layouts/TagPosts.astro";
+import getPostsByTag from "@utils/getGamesByTag";
 import getPageNumbers from "@utils/getPageNumbers";
 import getPagination from "@utils/getPagination";
-import getPostsByTag from "@utils/getPostsByTag";
 import getUniqueTags from "@utils/getUniqueTags";
 import { getCollection, type CollectionEntry } from "astro:content";
 
@@ -18,7 +17,7 @@ export async function getStaticPaths() {
   const tags = getUniqueTags(games);
 
   return tags.flatMap(({ tag, tagName }) => {
-    const tagPosts = getPostsByTag(posts, tag);
+    const tagPosts = getPostsByTag(games, tag);
     const totalPages = getPageNumbers(tagPosts.length);
 
     return totalPages.map(page => ({
@@ -41,4 +40,4 @@ const pagination = getPagination({
 });
 ---
 
-<TagPosts {...pagination} {tag} {tagName} />
+<!-- <TagPosts {...pagination} {tag} {tagName} /> -->
